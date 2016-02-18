@@ -1,6 +1,6 @@
 # really just some handy scripts...
 
-DIST=RehabMan-Voodoo
+DIST=jcsnider-VoodooPS2
 INSTDIR=/System/Library/Extensions
 KEXT=VoodooPS2Controller.kext
 
@@ -14,13 +14,13 @@ endif
 
 .PHONY: all
 all:
-	xcodebuild build $(OPTIONS) -scheme All -configuration Debug
-	xcodebuild build $(OPTIONS) -scheme All -configuration Release
+	xcodebuild build $(OPTIONS) -scheme 'All Kext' -configuration Debug
+	xcodebuild build $(OPTIONS) -scheme 'All Kext' -configuration Release
 
 .PHONY: clean
 clean:
-	xcodebuild clean $(OPTIONS) -scheme All -configuration Debug
-	xcodebuild clean $(OPTIONS) -scheme All -configuration Release
+	xcodebuild clean $(OPTIONS) -scheme 'All Kext' -configuration Debug
+	xcodebuild clean $(OPTIONS) -scheme 'All Kext' -configuration Release
 
 .PHONY: update_kernelcache
 update_kernelcache:
@@ -87,9 +87,9 @@ distribute:
 	/tmp/org.voodoo.rm.dsym.sh
 	rm /tmp/org.voodoo.rm.dsym.sh
 	cp ./VoodooPS2Daemon/org.rehabman.voodoo.driver.Daemon.plist ./Distribute/
-	rm -r ./Distribute/Debug/VoodooPS2synapticsPane.prefPane
-	rm -r ./Distribute/Release/VoodooPS2synapticsPane.prefPane
-	rm ./Distribute/Debug/synapticsconfigload
-	rm ./Distribute/Release/synapticsconfigload
+	-rm -r ./Distribute/Debug/VoodooPS2synapticsPane.prefPane
+	-rm -r ./Distribute/Release/VoodooPS2synapticsPane.prefPane
+	-rm ./Distribute/Debug/synapticsconfigload
+	-rm ./Distribute/Release/synapticsconfigload
 	ditto -c -k --sequesterRsrc --zlibCompressionLevel 9 ./Distribute ./Archive.zip
 	mv ./Archive.zip ./Distribute/`date +$(DIST)-%Y-%m%d.zip`
